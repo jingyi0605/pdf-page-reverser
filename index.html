@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f2eb" />
+    <meta name="description" content="在浏览器中安全地反转 PDF 页面顺序。" />
+    <title>倒页 | PDF 页面反转工具</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./" aria-label="倒页首页">
+          <span class="brand-mark" aria-hidden="true">↕</span>
+          <span>倒页</span>
+        </a>
+        <div class="privacy-note"><span class="status-dot"></span>选择或粘贴 PDF，在浏览器中倒序排列页面。原文件不会离开你的设备。</div>
+      </header>
+
+      <main>
+        <section class="workspace" aria-label="PDF 页面反转工作区">
+          <div class="upload-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="section-kicker">STEP 01</p>
+                <h2>放入 PDF 文件</h2>
+              </div>
+              <span class="file-type">PDF</span>
+            </div>
+
+            <label class="drop-zone" id="drop-zone" for="file-input" tabindex="0">
+              <span class="drop-icon" aria-hidden="true">↑</span>
+              <span class="drop-title">拖拽 PDF 到这里</span>
+              <span class="drop-subtitle">或点击选择本地文件</span>
+              <input id="file-input" type="file" accept="application/pdf,.pdf" />
+            </label>
+
+            <div class="or-divider"><span>也可以</span></div>
+
+            <button class="paste-button" id="paste-button" type="button">
+              <span aria-hidden="true">⌘</span>
+              从剪贴板粘贴 PDF
+            </button>
+            <p class="paste-hint">复制 PDF 文件后，直接在本页按 <kbd>⌘ V</kbd> / <kbd>Ctrl V</kbd></p>
+
+            <div class="selected-file" id="selected-file" hidden>
+              <div class="pdf-badge">PDF</div>
+              <div class="selected-file-info">
+                <strong id="file-name">未选择文件</strong>
+                <span id="file-meta">等待读取</span>
+              </div>
+              <button class="icon-button" id="remove-file" type="button" aria-label="移除文件" title="移除文件">×</button>
+            </div>
+          </div>
+
+          <div class="result-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="section-kicker">STEP 02</p>
+                <h2>倒序并下载</h2>
+              </div>
+              <span class="order-hint" aria-label="页面顺序从末页到首页">n → 1</span>
+            </div>
+
+            <div class="order-preview" id="order-preview" aria-label="页面顺序预览">
+              <div class="page-card page-back"><span>1</span></div>
+              <div class="page-card page-middle"><span>2</span></div>
+              <div class="page-card page-front"><span>n</span></div>
+              <div class="preview-arrow" aria-hidden="true">←</div>
+            </div>
+
+            <div class="stats" id="stats" hidden>
+              <div><span>文件页数</span><strong id="page-count">—</strong></div>
+              <div><span>输出顺序</span><strong>末页 → 首页</strong></div>
+            </div>
+
+            <label class="duplex-toggle" for="duplex-print">
+              <input id="duplex-print" type="checkbox" />
+              <span class="checkbox-mark" aria-hidden="true">✓</span>
+              <span class="duplex-copy"><strong>双面打印</strong><small>奇数页自动补一张首页空白页</small></span>
+            </label>
+
+            <div class="action-area">
+              <button class="primary-button" id="reverse-button" type="button" disabled>
+                <span>反转页面顺序</span>
+                <span aria-hidden="true">↗</span>
+              </button>
+              <p class="status-message" id="status-message" role="status">添加一个 PDF 后即可开始</p>
+            </div>
+
+            <div class="download-area" id="download-area" hidden>
+              <div class="success-line"><span class="success-icon" aria-hidden="true">✓</span>PDF 已完成反转</div>
+              <div class="download-actions">
+                <a class="download-link" id="download-link" href="#" download>
+                  <span>下载反转后的 PDF</span>
+                  <span aria-hidden="true">↓</span>
+                </a>
+                <button class="print-button" id="print-button" type="button">
+                  <span>打印反转后的 PDF</span>
+                  <span aria-hidden="true">⎙</span>
+                </button>
+              </div>
+              <p class="print-note" id="print-note"></p>
+              <span class="download-meta" id="download-meta"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="how-it-works" aria-label="使用说明">
+          <div class="how-item"><span>01</span><p>选择、拖拽或粘贴 PDF</p></div>
+          <div class="how-line" aria-hidden="true"></div>
+          <div class="how-item"><span>02</span><p>浏览器读取并重新排列页面</p></div>
+          <div class="how-line" aria-hidden="true"></div>
+          <div class="how-item"><span>03</span><p>下载新的 PDF 文件</p></div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>倒页 / REVERSE PDF PAGES</span>
+        <span>所有处理均在本地完成</span>
+      </footer>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
