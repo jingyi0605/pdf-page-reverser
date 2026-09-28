@@ -1,3 +1,5 @@
+import { PDFDocument } from 'pdf-lib';
+
 (() => {
   'use strict';
 
@@ -79,7 +81,7 @@
     elements.reverseButton.disabled = true;
     try {
       const bytes = await file.arrayBuffer();
-      const pdf = await PDFLib.PDFDocument.load(bytes);
+      const pdf = await PDFDocument.load(bytes);
       state.file = file;
       state.sourceBytes = bytes;
       elements.fileName.textContent = file.name;
@@ -102,8 +104,8 @@
     setStatus('正在重新排列页面，请稍候…');
     resetOutput();
     try {
-      const source = await PDFLib.PDFDocument.load(state.sourceBytes);
-      const output = await PDFLib.PDFDocument.create();
+      const source = await PDFDocument.load(state.sourceBytes);
+      const output = await PDFDocument.create();
       const sourcePageCount = source.getPageCount();
       const duplexPrintEnabled = elements.duplexPrint.checked;
       const shouldAddBlankPage = duplexPrintEnabled && sourcePageCount % 2 === 1;
